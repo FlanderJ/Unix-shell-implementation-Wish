@@ -1,0 +1,4 @@
+ls -l
+ps
+ls & ps & ls
+ls & ps > newout.txt
