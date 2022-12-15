@@ -27,7 +27,7 @@ int parseCommandLine(char *command, char **cmdPtr, int *parallel) {
     char *arg;
     // Check all white-spaces from beginning of the command:
     while (isspace(command[0]) != 0) {
-        memmove(&command[0],&command[0+1], strlen(command)-0); // remove white-space
+        memmove(&command[0],&command[1], strlen(command)); // remove white-space
     }   
     // Read user input (interpret command):
     if ((arg = strtok(command," "))==NULL) {return 0;}; // command
@@ -43,7 +43,7 @@ int parseCommandLine(char *command, char **cmdPtr, int *parallel) {
         }
         // Check all white-spaces from beginning of argument:
         while (isspace(arg[0]) != 0) {
-            memmove(&arg[0],&arg[0+1], strlen(arg)-0); // remove white-space
+            memmove(&arg[0],&arg[1], strlen(arg)); // remove white-space
         }   
         removeWhiteSpace(arg); // Remove all whitespaces from the end of the command or argument
 
