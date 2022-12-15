@@ -57,8 +57,16 @@ int parseCommandLine(char *command, char **cmdPtr, int *parallel) {
         cmdPtr[i] = arg; // Save arguments and commands
         i++;
     }
-    // Last entry of arguments set to NULL:
-    cmdPtr[i] = NULL;
+    /* If the last argument is & ignore it */
+    if ((strcmp(cmdPtr[i-1],"&"))==0){
+        cmdPtr[i-1]=NULL; // Last entry of arguments set to NULL:
+        *parallel = *parallel -1;
+        i--;
+    }
+    else {
+        // Last entry of arguments set to NULL:
+        cmdPtr[i] = NULL;
+    }
     return (i);
 }
 
