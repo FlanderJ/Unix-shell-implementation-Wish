@@ -60,12 +60,12 @@ int main (int argc, char *argv[]) {
         }
 
         while ((getline(&fileCommand,&n,file))!=EOF) {
-            fileCommand[strlen(fileCommand)-1] = '\0'; // Replace last value with NULL to remove \n from the end.
+            fileCommand[strlen(fileCommand)] = '\0'; // Replace last value with NULL to remove \n from the end.
             // Parse command line, if no command continue:
             if ((argAmount = parseCommandLine(fileCommand,cLineArguments, &parallel))==0){
                 continue;
             }
-
+            
             // If command parser detected parallelism, run them "simultaneously":
             if (parallel != 1) {
                 allParallelCommands = parseParallel(cLineArguments,argAmount,parallel);
@@ -82,14 +82,18 @@ int main (int argc, char *argv[]) {
                 continue;
             }   
             // Search for the command (if not found continue):
-            if (checkAccess(command)==-1) {
+            if (checkAccess(fileCommand)==-1) {
                 continue;
             }
             
             // Run given command with it's arguments:
             runSubprocess(cLineArguments,argAmount);
+
         }
+        fclose(file); /* Remember to close file! */
+        free(fileCommand);
     }
+    
     // If too many input arguments:
     else {
         raise(SIGUSR1);
